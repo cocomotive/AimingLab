@@ -1,3 +1,6 @@
+package Managers;
+
+import Aiming.*;
 
 import java.util.*;
 

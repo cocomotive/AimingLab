@@ -1,3 +1,6 @@
+package Targets;
+
+import Managers.GameManager;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 

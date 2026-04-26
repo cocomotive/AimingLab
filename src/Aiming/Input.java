@@ -1,3 +1,6 @@
+package Aiming;
+
+import Managers.GameManager;
 import org.academiadecodigo.simplegraphics.mouse.*;
 
 public class Input implements MouseHandler {

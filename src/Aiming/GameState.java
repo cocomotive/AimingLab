@@ -1,3 +1,5 @@
+package Aiming;
+
 public enum GameState {
     MENU,
     PRACTICE,

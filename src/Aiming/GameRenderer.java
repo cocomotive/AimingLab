@@ -1,6 +1,7 @@
+package Aiming;
+
 import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class GameRenderer {
 

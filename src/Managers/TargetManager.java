@@ -1,4 +1,10 @@
-//import Targets.DevilTarget;
+package Managers;//import Targets.Targets.DevilTarget;
+
+import Aiming.GameState;
+import Targets.Target;
+import Targets.DevilTarget;
+import Targets.EnemyTarget;
+import Targets.FriendlyTarget;
 
 import java.util.*;
 

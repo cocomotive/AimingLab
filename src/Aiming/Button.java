@@ -1,3 +1,5 @@
+package Aiming;
+
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Button {

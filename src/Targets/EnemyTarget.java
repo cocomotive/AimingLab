@@ -1,3 +1,7 @@
+package Targets;
+
+import Managers.GameManager;
+
 public class EnemyTarget extends Target {
 
     public EnemyTarget() {

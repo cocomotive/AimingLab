@@ -1,3 +1,6 @@
+package Managers;
+
+import Aiming.UIRenderer;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import org.academiadecodigo.simplegraphics.graphics.Canvas;
 

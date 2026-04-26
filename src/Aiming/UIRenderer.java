@@ -1,3 +1,5 @@
+package Aiming;
+
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import java.awt.*;
 import java.awt.image.BufferedImage;
