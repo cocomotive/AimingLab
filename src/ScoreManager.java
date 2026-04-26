@@ -1,5 +1,3 @@
-package Managers;
-
 import java.io.*;
 
 public class ScoreManager {

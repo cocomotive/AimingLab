@@ -1,6 +1,5 @@
-import Managers.BackgroundManager;
-import Managers.ScoreManager;
-
+//import Managers.BackgroundManager;
+//import Managers.ScoreManager;
 import java.util.*;
 
 public class GameManager {
@@ -9,6 +8,7 @@ public class GameManager {
 
     private BackgroundManager bg = new BackgroundManager();
     private TargetManager targetManager = new TargetManager();
+    private GameRenderer renderer; // NUEVO
     private List<Button> buttons = new ArrayList<>();
 
     private int score = 0;
@@ -16,15 +16,14 @@ public class GameManager {
     private int bestScore = ScoreManager.load();
 
     public GameManager() {
+        renderer = new GameRenderer(new UIRenderer()); // NUEVO
         showMenu();
     }
 
     // ===== MENU =====
     public void showMenu() {
-
         clearUI();
         state = GameState.MENU;
-
         bg.setBackground("/Users/andreaparra/workspace/Aiming/Aiming/Resources/Background.jpg");
 
         buttons.add(new Button(300,200,"/Users/andreaparra/workspace/Aiming/Aiming/Resources/PracticeButton.png", this::startPractice));
@@ -34,10 +33,8 @@ public class GameManager {
 
     // ===== PRACTICE =====
     public void startPractice() {
-
         clearUI();
         state = GameState.PRACTICE;
-
         bg.setBackground("/Users/andreaparra/workspace/Aiming/Aiming/Resources/Background.jpg");
 
         new Thread(() -> {
@@ -50,7 +47,6 @@ public class GameManager {
 
     // ===== SURVIVAL =====
     public void startSurvival() {
-
         clearUI();
         state = GameState.SURVIVAL;
 
@@ -63,18 +59,18 @@ public class GameManager {
     }
 
     private void survivalLoop() {
-
         long start = System.currentTimeMillis();
 
         while (state == GameState.SURVIVAL) {
-
             long elapsed = (System.currentTimeMillis() - start) / 1000;
-
             int spawnRate = Math.max(200, 1000 - (int)elapsed * 15);
 
             targetManager.spawnRandom(state);
 
-            time--;
+            time = 60 - (int)elapsed;
+
+            // NUEVO: Actualizar UI
+            renderer.renderUI(score, time, bestScore);
 
             if (time <= 0) {
                 showGameOver();
@@ -87,7 +83,6 @@ public class GameManager {
 
     // ===== GAME OVER =====
     public void showGameOver() {
-
         clearUI();
         state = GameState.GAME_OVER;
 
@@ -104,7 +99,6 @@ public class GameManager {
 
     // ===== INPUT =====
     public void handleClick(double x, double y) {
-
         for (Button b : buttons) {
             if (b.isClicked(x, y)) {
                 b.click();
@@ -118,11 +112,16 @@ public class GameManager {
     }
 
     // ===== UTILS =====
-    public void addScore(int v) { score += v; }
+    public void addScore(int v) {
+        score += v;
+        // NUEVO: Se renderiza en el loop
+    }
+
     public void addTime(int v) { time += v; }
 
     private void clearUI() {
         targetManager.clear();
+        renderer.clear(); // NUEVO
 
         for (Button b : buttons) {
             b.destroy();

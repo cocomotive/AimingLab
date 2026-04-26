@@ -1,7 +1,7 @@
 public class DevilTarget extends Target {
 
     public DevilTarget() {
-        super("images/devil.png");
+        super("/Users/andreaparra/workspace/Aiming/Aiming/Resources/Target.jpeg");
     }
 
     @Override
