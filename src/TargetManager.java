@@ -1,3 +1,5 @@
+//import Targets.DevilTarget;
+
 import java.util.*;
 
 public class TargetManager {

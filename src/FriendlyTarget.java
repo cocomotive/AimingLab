@@ -1,7 +1,7 @@
 public class FriendlyTarget extends Target {
 
     public FriendlyTarget() {
-        super("/Users/andreaparra/workspace/Aiming/Aiming/Resources/Target.jpeg");
+        super("Resources/friendlyTarget.png");
     }
 
     @Override
