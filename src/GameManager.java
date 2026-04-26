@@ -27,9 +27,9 @@ public class GameManager {
 
         bg.setBackground("/Users/andreaparra/workspace/Aiming/Aiming/Resources/Background.jpg");
 
-        buttons.add(new Button(300,200,"images/practice_btn.png", this::startPractice));
-        buttons.add(new Button(300,300,"images/survival_btn.png", this::startSurvival));
-        buttons.add(new Button(300,400,"images/exit_btn.png", () -> System.exit(0)));
+        buttons.add(new Button(300,200,"/Users/andreaparra/workspace/Aiming/Aiming/Resources/PracticeButton.png", this::startPractice));
+        buttons.add(new Button(300,300,"/Users/andreaparra/workspace/Aiming/Aiming/Resources/SurvivalButton.png", this::startSurvival));
+        buttons.add(new Button(300,400,"/Users/andreaparra/workspace/Aiming/Aiming/Resources/ExitButton.png", () -> System.exit(0)));
     }
 
     // ===== PRACTICE =====
