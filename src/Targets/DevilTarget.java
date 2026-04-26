@@ -5,7 +5,7 @@ import Managers.GameManager;
 public class DevilTarget extends Target {
 
     public DevilTarget() {
-        super("Resources/devilTarget.png");
+        super("AimingLab/Resources/devilTarget.png");
     }
 
     @Override

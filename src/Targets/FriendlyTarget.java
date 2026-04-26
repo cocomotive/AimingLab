@@ -5,7 +5,7 @@ import Managers.GameManager;
 public class FriendlyTarget extends Target {
 
     public FriendlyTarget() {
-        super("Resources/friendlyTarget.png");
+        super("AimingLab/Resources/friendlyTarget.png");
     }
 
     @Override

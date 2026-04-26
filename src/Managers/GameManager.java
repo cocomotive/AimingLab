@@ -26,18 +26,18 @@ public class GameManager {
     public void showMenu() {
         clearUI();
         state = GameState.MENU;
-        bg.setBackground("Resources/Background.jpg");
+        bg.setBackground("AimingLab/Resources/Background.jpg");
 
-        buttons.add(new Button(300,200,"Resources/PracticeButton.png", this::startPractice));
-        buttons.add(new Button(300,300,"Resources/SurvivalButton.png", this::startSurvival));
-        buttons.add(new Button(300,400,"Resources/ExitButton.png", () -> System.exit(0)));
+        buttons.add(new Button(300,200,"AimingLab/Resources/PracticeButton.png", this::startPractice));
+        buttons.add(new Button(300,300,"AimingLab/Resources/SurvivalButton.png", this::startSurvival));
+        buttons.add(new Button(300,400,"AimingLab/Resources/ExitButton.png", () -> System.exit(0)));
     }
 
     // ===== PRACTICE =====
     public void startPractice() {
         clearUI();
         state = GameState.PRACTICE;
-        bg.setBackground("Resources/Background.jpg");
+        bg.setBackground("AimingLab/Resources/Background.jpg");
 
         new Thread(() -> {
             while (state == GameState.PRACTICE) {
@@ -55,7 +55,7 @@ public class GameManager {
         score = 0;
         time = 60;
 
-        bg.setBackground("Resources/Background.jpg");
+        bg.setBackground("AimingLab/Resources/Background.jpg");
 
         uiRenderer.show(); // NUEVO: Mostrar el UI
         uiRenderer.update(score, time, bestScore); // NUEVO
@@ -96,7 +96,7 @@ public class GameManager {
             ScoreManager.save(score);
         }
 
-        bg.setBackground("Resources/Background.jpg");
+        bg.setBackground("AimingLab/Resources/Background.jpg");
 
         buttons.add(new Button(300,300,"images/retry_btn.png", this::startSurvival));
         buttons.add(new Button(300,400,"images/menu_btn.png", this::showMenu));
