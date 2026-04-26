@@ -1,5 +1,4 @@
-//import Managers.BackgroundManager;
-//import Managers.ScoreManager;
+
 import java.util.*;
 
 public class GameManager {
@@ -8,7 +7,7 @@ public class GameManager {
 
     private BackgroundManager bg = new BackgroundManager();
     private TargetManager targetManager = new TargetManager();
-    private GameRenderer renderer; // NUEVO
+    private UIRenderer uiRenderer; // NUEVO
     private List<Button> buttons = new ArrayList<>();
 
     private int score = 0;
@@ -16,7 +15,7 @@ public class GameManager {
     private int bestScore = ScoreManager.load();
 
     public GameManager() {
-        renderer = new GameRenderer(new UIRenderer()); // NUEVO
+        uiRenderer = new UIRenderer(); // NUEVO
         showMenu();
     }
 
@@ -55,6 +54,9 @@ public class GameManager {
 
         bg.setBackground("/Users/andreaparra/workspace/Aiming/Aiming/Resources/Background.jpg");
 
+        uiRenderer.show(); // NUEVO: Mostrar el UI
+        uiRenderer.update(score, time, bestScore); // NUEVO
+
         new Thread(this::survivalLoop).start();
     }
 
@@ -69,8 +71,8 @@ public class GameManager {
 
             time = 60 - (int)elapsed;
 
-            // NUEVO: Actualizar UI
-            renderer.renderUI(score, time, bestScore);
+            // NUEVO: Actualizar UI cada frame
+            uiRenderer.update(score, time, bestScore);
 
             if (time <= 0) {
                 showGameOver();
@@ -114,14 +116,13 @@ public class GameManager {
     // ===== UTILS =====
     public void addScore(int v) {
         score += v;
-        // NUEVO: Se renderiza en el loop
     }
 
     public void addTime(int v) { time += v; }
 
     private void clearUI() {
         targetManager.clear();
-        renderer.clear(); // NUEVO
+        uiRenderer.clear(); // NUEVO
 
         for (Button b : buttons) {
             b.destroy();
