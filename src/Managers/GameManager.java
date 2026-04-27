@@ -121,6 +121,9 @@ public class GameManager {
         }
     }
 
+    public Aiming.GameState getGameState() {
+        return state;
+    }
 
 
     // ===== UTILS =====
