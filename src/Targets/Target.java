@@ -9,27 +9,29 @@ public abstract class Target {
     protected Picture sprite;
     protected double x, y;
     protected double radius;
+    protected String path;
+    public Target(Picture sprite, double x, double y, double radius, String name) {}
+
 
     public Target(String path) {
-        sprite = new Picture(0, 0, path);
+        this.path = path;
     }
 
     public void spawn(double x, double y) {
 
-        sprite.draw();
+        sprite = new Picture(0, 0, path);
 
         int targetSize = 90;
-
         int deltaW = targetSize - sprite.getWidth();
         int deltaH = targetSize - sprite.getHeight();
 
         sprite.grow(deltaW, deltaH);
 
-        sprite.translate(
-                x - sprite.getWidth() / 2.0,
-                y - sprite.getHeight() / 2.0
-        );
+        double finalX = x - sprite.getWidth() / 2.0;
+        double finalY = y - sprite.getHeight() / 2.0;
+        sprite.translate(finalX, finalY);
 
+        sprite.draw();
 
         radius = sprite.getWidth() * 0.5;
     }
