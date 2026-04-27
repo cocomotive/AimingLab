@@ -3,6 +3,8 @@ package Managers;
 import Aiming.*;
 
 import java.util.*;
+import javax.swing.*;
+import java.util.*;
 
 
 public class GameManager {
@@ -18,6 +20,7 @@ public class GameManager {
     private int score = 0;
     private int time = 60;
     private int bestScore = ScoreManager.load();
+    private int timeOffset = 0;
 
     public GameManager() {
         uiRenderer = new UIRenderer(); // NUEVO
@@ -60,6 +63,7 @@ public class GameManager {
 
         score = 0;
         time = 60;
+        timeOffset = 0;
 
         bg.setBackground("Resources/Background.jpg");
 
@@ -78,7 +82,7 @@ public class GameManager {
 
             targetManager.spawnRandom(state);
 
-            time = 60 - (int)elapsed;
+            time = 60 - (int)elapsed + timeOffset;
 
             // NUEVO: Actualizar UI cada frame
             uiRenderer.update(score, time, bestScore);
@@ -91,6 +95,7 @@ public class GameManager {
             sleep(spawnRate);
         }
     }
+
 
     // ===== GAME OVER =====
     public void showGameOver() {
