@@ -15,10 +15,7 @@ public abstract class Target {
     }
 
     public void spawn(double x, double y) {
-        this.x = x;
-        this.y = y;
 
-        sprite.translate(x, y);
         sprite.draw();
 
         int targetSize = 90;
@@ -27,9 +24,10 @@ public abstract class Target {
         int deltaH = targetSize - sprite.getHeight();
 
         sprite.grow(deltaW, deltaH);
+
         sprite.translate(
-                -sprite.getWidth() / 2.0,
-                -sprite.getHeight() / 2.0
+                x - sprite.getWidth() / 2.0,
+                y - sprite.getHeight() / 2.0
         );
 
 
@@ -41,8 +39,9 @@ public abstract class Target {
     }
 
     public boolean isHit(double mx, double my) {
-        double cx = x + sprite.getWidth() / 2.0;
-        double cy = y + sprite.getHeight() / 2.0;
+
+        double cx = sprite.getX() + sprite.getWidth() / 2.0;
+        double cy = sprite.getY() + sprite.getHeight() / 2.0;
 
         double dx = mx - cx;
         double dy = my - cy;
