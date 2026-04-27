@@ -1,6 +1,9 @@
 package Aiming;
 
+
 import org.academiadecodigo.simplegraphics.pictures.Picture;
+import org.academiadecodigo.simplegraphics.graphics.Text;
+//import org.academiadecodigo.simplegraphics.graphics.Color;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,18 +17,19 @@ public class UIRenderer {
     private boolean isVisible = false;
 
     public UIRenderer() {
-        // inicialize empty images
+        //inicialize empty images
         scoreImage = createTextImage("Score: 0", 0, 0);
         timeImage = createTextImage("Time: 60", 0, 40);
         bestScoreImage = createTextImage("Best: 0", 600, 0);
+
     }
 
     private Picture createTextImage(String text, int x, int y) {
         BufferedImage img = new BufferedImage(300, 50, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) img.getGraphics();
 
-        //g2d.setColor(Color.BLACK);
-        //g2d.fillRect(0, 0, 300, 50);
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0, 0, 300, 50);
 
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD, 20));
@@ -34,7 +38,7 @@ public class UIRenderer {
         g2d.dispose();
 
         // save temp image
-        try {
+       try {
             File temp = File.createTempFile("ui_text", ".png");
             ImageIO.write(img, "png", temp);
             return new Picture(x, y, temp.getAbsolutePath());
