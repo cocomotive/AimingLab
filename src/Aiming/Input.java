@@ -2,6 +2,7 @@ package Aiming;
 
 import Managers.GameManager;
 import org.academiadecodigo.simplegraphics.mouse.*;
+import org.academiadecodigo.simplegraphics.keyboard.*;
 
 public class Input implements MouseHandler {
 
@@ -22,3 +23,5 @@ public class Input implements MouseHandler {
     @Override
     public void mouseMoved(MouseEvent e) {}
 }
+
+

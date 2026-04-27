@@ -116,6 +116,8 @@ public class GameManager {
         }
     }
 
+    
+
     // ===== UTILS =====
     public void addScore(int v) {
         score += v;
