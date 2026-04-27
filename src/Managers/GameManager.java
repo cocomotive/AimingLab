@@ -66,9 +66,14 @@ public class GameManager {
     public void backToMenu() {
         clearUI();
         state = GameState.MENU;
+        targetManager.setState(GameState.MENU);
+        targetManager.clear();
 
         if (survivalThread != null && survivalThread.isAlive()) {
             survivalThread.interrupt();
+        }
+        if (practiceThread != null && practiceThread.isAlive()) {
+            practiceThread.interrupt();
         }
 
         bg.setBackground("Resources/menuBackground.png");

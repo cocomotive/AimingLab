@@ -5,10 +5,12 @@ import org.academiadecodigo.simplegraphics.keyboard.*;
 
 public class KeyboardInput implements KeyboardHandler {
     private Keyboard keyboard;
-    GameManager gameManager = new GameManager();
+    private GameManager gameManager;
 
     public KeyboardInput(GameManager game) {
         this.keyboard = new Keyboard(this);
+        this.gameManager = game;
+
     }
 
     public void initKeys(){
