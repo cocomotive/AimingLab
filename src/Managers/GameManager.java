@@ -12,6 +12,7 @@ public class GameManager {
     private TargetManager targetManager = new TargetManager();
     private UIRenderer uiRenderer; // NUEVO
     private List<Button> buttons = new ArrayList<>();
+    private SoundManager menuMusic;
 
     private int score = 0;
     private int time = 60;
@@ -19,13 +20,17 @@ public class GameManager {
 
     public GameManager() {
         uiRenderer = new UIRenderer(); // NUEVO
+        menuMusic = new SoundManager("AimingLab/Resources/musica-aim-_4_.wav");
         showMenu();
+
+
     }
 
     // ===== MENU =====
     public void showMenu() {
         clearUI();
         state = GameState.MENU;
+        menuMusic.playLoop();
         bg.setBackground("AimingLab/Resources/Background.jpg");
 
         buttons.add(new Button(300,200,"AimingLab/Resources/PracticeButton.png", this::startPractice));
@@ -116,7 +121,7 @@ public class GameManager {
         }
     }
 
-    
+
 
     // ===== UTILS =====
     public void addScore(int v) {
