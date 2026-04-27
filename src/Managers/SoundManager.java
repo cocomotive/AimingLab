@@ -21,10 +21,14 @@ public class SoundManager {
         }
     }
 
+
     public void playLoop(){
         if (clip != null &&  !clip.isRunning()){
             clip.setFramePosition(0);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volume.setValue(-15.0f);
         }
     }
     public void stop(){
