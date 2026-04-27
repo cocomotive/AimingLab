@@ -21,6 +21,18 @@ public abstract class Target {
         sprite.translate(x, y);
         sprite.draw();
 
+        int targetSize = 90;
+
+        int deltaW = targetSize - sprite.getWidth();
+        int deltaH = targetSize - sprite.getHeight();
+
+        sprite.grow(deltaW, deltaH);
+        sprite.translate(
+                -sprite.getWidth() / 2.0,
+                -sprite.getHeight() / 2.0
+        );
+
+
         radius = sprite.getWidth() * 0.5;
     }
 
