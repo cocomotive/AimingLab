@@ -29,8 +29,6 @@ public class GameManager {
         crossManager = new CrossManager();
 
         showMenu();
-
-
     }
 
     // ===== MENU =====
@@ -39,6 +37,7 @@ public class GameManager {
         state = GameState.MENU;
         menuMusic.playLoop();
         bg.setBackground("Resources/menuBackground.png");
+        crossManager.show();
 
         buttons.add(new Button(250,650,"Resources/PracticeButton.png", this::startPractice));
         buttons.add(new Button(650,650,"Resources/SurvivalButton.png", this::startSurvival));
@@ -50,6 +49,8 @@ public class GameManager {
         clearUI();
         state = GameState.PRACTICE;
         bg.setBackground("Resources/Background.jpg");
+        crossManager.show();
+
 
         new Thread(() -> {
             while (state == GameState.PRACTICE) {
@@ -69,6 +70,7 @@ public class GameManager {
         timeOffset = 0;
 
         bg.setBackground("Resources/Background.jpg");
+        crossManager.show();
 
         uiRenderer.show();
         uiRenderer.update(score, time, bestScore); // NUEVO
