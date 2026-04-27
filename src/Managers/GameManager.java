@@ -15,7 +15,7 @@ public class GameManager {
     private SoundManager menuMusic;
 
     private int score = 0;
-    private int time = 10;
+    private int time = 60;
     private int bestScore = ScoreManager.load();
 
     public GameManager() {
