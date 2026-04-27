@@ -11,7 +11,7 @@ import java.util.*;
 public class TargetManager {
 
     private List<Target> targets = new ArrayList<>();
-    private int maxTargets = 15;  // ✅ Reducido a 15
+    private int maxTargets = 15;
     private Random rand = new Random();
 
     // Dimensiones de pantalla full
@@ -40,14 +40,14 @@ public class TargetManager {
 
         double x, y;
         int attempts = 0;
-        int maxAttempts = 50;  // Más intentos para garantizar spawn
+        int maxAttempts = 1000;
 
-        // ✅ Generar posición sin overlapping
+        // ✅ Generar posición considerando el tamaño REAL del sprite
         do {
-            x = rand.nextDouble() * (SCREEN_WIDTH - TARGET_SIZE);
-            y = rand.nextDouble() * (SCREEN_HEIGHT - TARGET_SIZE);
+            x = COLLISION_PADDING + rand.nextDouble() * (SCREEN_WIDTH - TARGET_SIZE - 2 * COLLISION_PADDING);
+            y = COLLISION_PADDING + rand.nextDouble() * (SCREEN_HEIGHT - TARGET_SIZE - 2 * COLLISION_PADDING);
             attempts++;
-        } while (isOverlapping(x, y, TARGET_SIZE) && attempts < maxAttempts);
+        } while (isOverlappingWithSprite(x, y) && attempts < maxAttempts);
 
         // Solo spawnear si se encontró posición válida
         if (attempts < maxAttempts) {
@@ -56,21 +56,29 @@ public class TargetManager {
         }
     }
 
-    public boolean isOverlapping(double x, double y, double size) {
-        // ✅ Detección de colisión mejorada
-        double margin = size + COLLISION_PADDING;
+    /**
+     * ✅ Verifica overlapping considerando el TAMAÑO COMPLETO del sprite
+     * (x, y) es el centro donde se va a posicionar el nuevo sprite
+     */
+    private boolean isOverlappingWithSprite(double centerX, double centerY) {
+        // Calcular bounds del nuevo sprite (considerando que será centrado)
+        double newLeft = centerX - TARGET_SIZE / 2.0;
+        double newRight = centerX + TARGET_SIZE / 2.0;
+        double newTop = centerY - TARGET_SIZE / 2.0;
+        double newBottom = centerY + TARGET_SIZE / 2.0;
 
+        // Comparar con todos los sprites existentes
         for (Target t : targets) {
-            double tx = t.getX();
-            double ty = t.getY();
-            double tw = t.getWidth();
-            double th = t.getHeight();
+            double existingLeft = t.getX();
+            double existingRight = t.getX() + t.getWidth();
+            double existingTop = t.getY();
+            double existingBottom = t.getY() + t.getHeight();
 
-            // Collision AABB (Axis-Aligned Bounding Box)
-            if (!(x + size < tx - COLLISION_PADDING ||
-                    x > tx + tw + COLLISION_PADDING ||
-                    y + size < ty - COLLISION_PADDING ||
-                    y > ty + th + COLLISION_PADDING)) {
+            // AABB collision con padding
+            if (!(newRight + COLLISION_PADDING < existingLeft ||
+                    newLeft - COLLISION_PADDING > existingRight ||
+                    newBottom + COLLISION_PADDING < existingTop ||
+                    newTop - COLLISION_PADDING > existingBottom)) {
                 return true;
             }
         }
@@ -108,4 +116,5 @@ public class TargetManager {
     public int getTargetCount() {
         return targets.size();
     }
+
 }
