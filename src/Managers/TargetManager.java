@@ -29,31 +29,34 @@ public class TargetManager {
                 else t = new DevilTarget();
             }
 
-            // Obtener posiciones disponibles
-            List<Point> availableSpots = getAvailableSpawnPoints();
+            // Intentar encontrar una posición válida
+            Point p = findValidSpawnPoint();
 
-            // Si hay posiciones disponibles, spawnear en una al azar
-            if (!availableSpots.isEmpty()) {
-                Point p = availableSpots.get(rand.nextInt(availableSpots.size()));
+            if (p != null) {
                 t.spawn(p.x, p.y);
                 targets.add(t);
             }
         }
     }
 
-    private List<Point> getAvailableSpawnPoints() {
-        List<Point> available = new ArrayList<>();
-        int spacing = 120; // Separación mínima entre targets
-        int padding = 50;  // Margen desde los bordes
+    private Point findValidSpawnPoint() {
+        int maxAttempts = 100;
+        int spacing = 120;
+        int padding = 60;
+        int gridSize = 20; // Variación aleatoria dentro de cada celda
 
-        for (int x = padding; x < 700; x += spacing) {
-            for (int y = padding; y < 500; y += spacing) {
-                if (!isOverlapping(x, y, spacing)) {
-                    available.add(new Point(x, y));
-                }
+        for (int attempt = 0; attempt < maxAttempts; attempt++) {
+            // Generar una posición aleatoria
+            double x = padding + rand.nextInt(700 - padding);
+            double y = padding + rand.nextInt(500 - padding);
+
+            // Verificar si no solapea
+            if (!isOverlapping(x, y, spacing)) {
+                return new Point((int)x, (int)y);
             }
         }
-        return available;
+
+        return null; // Si no encuentra posición después de muchos intentos
     }
 
     public boolean isOverlapping(double x, double y, double radius) {
