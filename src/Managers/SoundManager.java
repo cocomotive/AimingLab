@@ -19,6 +19,8 @@ public class SoundManager {
         }catch (Exception e){
             e.printStackTrace();
         }
+        FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        volume.setValue(-15.0f);
     }
 
 
@@ -27,8 +29,7 @@ public class SoundManager {
             clip.setFramePosition(0);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
 
-            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            volume.setValue(-15.0f);
+
         }
     }
     public void stop(){

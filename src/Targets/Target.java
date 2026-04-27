@@ -28,7 +28,7 @@ public abstract class Target {
         sprite.grow(deltaW, deltaH);
 
         double finalX = x - sprite.getWidth() / 2.0;
-        double finalY = y - sprite.getHeight() / 2.0;
+        double finalY = y - sprite.getHeight() / 2.0 ;
         sprite.translate(finalX, finalY);
 
         sprite.draw();
