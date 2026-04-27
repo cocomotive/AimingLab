@@ -17,7 +17,7 @@ public class Input implements MouseHandler {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        game.handleClick(e.getX(), e.getY() - 35);
+        game.handleClick(e.getX(), e.getY());
     }
 
     @Override
