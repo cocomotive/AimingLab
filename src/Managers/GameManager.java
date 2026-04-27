@@ -4,6 +4,7 @@ import Aiming.*;
 import Managers.*;
 
 import java.util.*;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.util.*;
 
@@ -15,8 +16,10 @@ public class GameManager {
     private TargetManager targetManager = new TargetManager();
     private UIRenderer uiRenderer; // NUEVO
     private List<Button> buttons = new ArrayList<>();
-    private SoundManager menuMusic;
+    private static SoundManager menuMusic;
     private CrossManager crossManager;
+    private Thread survivalThread;
+    private Thread practiceThread;
 
     private int score = 0;
     private int time = 60;
@@ -25,7 +28,11 @@ public class GameManager {
 
     public GameManager() {
         uiRenderer = new UIRenderer();
-        menuMusic = new SoundManager("Resources/musica-aim-_4_.wav");
+
+        if (menuMusic == null) {
+            menuMusic = new SoundManager("Resources/musica-aim-_4_.wav");
+        }
+
         crossManager = new CrossManager();
 
         showMenu();
@@ -35,6 +42,17 @@ public class GameManager {
     public void showMenu() {
         clearUI();
         state = GameState.MENU;
+        targetManager.setState(GameState.MENU);
+        targetManager.clear();
+
+        if (survivalThread != null && survivalThread.isAlive()) {
+            survivalThread.interrupt();
+        }
+
+        if (practiceThread != null && practiceThread.isAlive()) {
+            practiceThread.interrupt();
+        }
+
         menuMusic.playLoop();
         bg.setBackground("Resources/menuBackground.png");
         crossManager.show();
@@ -44,54 +62,84 @@ public class GameManager {
         buttons.add(new Button(1050,650,"Resources/ExitButton.png", () -> System.exit(0)));
     }
 
+
+    public void backToMenu() {
+        clearUI();
+        state = GameState.MENU;
+
+        if (survivalThread != null && survivalThread.isAlive()) {
+            survivalThread.interrupt();
+        }
+
+        bg.setBackground("Resources/menuBackground.png");
+
+        buttons.add(new Button(250,650,"Resources/PracticeButton.png", this::startPractice));
+        buttons.add(new Button(650,650,"Resources/SurvivalButton.png", this::startSurvival));
+        buttons.add(new Button(1050,650,"Resources/ExitButton.png", () -> System.exit(0)));
+
+    }
+
+
     // ===== PRACTICE =====
     public void startPractice() {
         clearUI();
         state = GameState.PRACTICE;
+        targetManager.setState(GameState.PRACTICE);
         bg.setBackground("Resources/Background.jpg");
-        crossManager.show();
 
+        practiceThread = new Thread(() -> {
+            try {
+                while (state == GameState.PRACTICE &&
+                        !Thread.currentThread().isInterrupted()) {
 
-        new Thread(() -> {
-            while (state == GameState.PRACTICE) {
-                targetManager.spawnRandom(state);
-                sleep(800);
-            }
-        }).start();
+                    targetManager.spawnRandom(state);
+                    sleep(800);
+                }
+            } catch (Exception ignored) {}
+        });
+
+        practiceThread.start();
     }
 
     // ===== SURVIVAL =====
     public void startSurvival() {
         clearUI();
         state = GameState.SURVIVAL;
+        targetManager.setState(GameState.SURVIVAL);
 
         score = 0;
         time = 60;
         timeOffset = 0;
 
         bg.setBackground("Resources/Background.jpg");
-        crossManager.show();
+        //crossManager.show();
 
         uiRenderer.show();
         uiRenderer.update(score, time, bestScore); // NUEVO
 
-        new Thread(this::survivalLoop).start();
+        survivalThread = new Thread(this::survivalLoop);
+        survivalThread.start();
     }
 
     private void survivalLoop() {
 
+        try {
+            while (state == GameState.SURVIVAL &&
+                    !Thread.currentThread().isInterrupted()) {
 
-        while (state == GameState.SURVIVAL) {
+                targetManager.spawnRandom(state);
+                time--;
+                uiRenderer.update(score, time, bestScore);
 
-            targetManager.spawnRandom(state);
-            time--;
-            uiRenderer.update(score, time, bestScore);
+                if (time <= 0) {
+                    showGameOver();
+                    break;
+                }
 
-            if (time <= 0) {
-                showGameOver();
-                break;
+                Thread.sleep(1000);
             }
-            sleep(1000);
+        } catch (InterruptedException e) {
+            // thread detenido correctamente
         }
     }
 

@@ -5,8 +5,7 @@ import java.io.File;
 
 public class SoundManager {
 
-
-    private Clip clip;
+    private static Clip clip;
 
     public SoundManager(String path) {
         try {
@@ -16,22 +15,24 @@ public class SoundManager {
             clip = AudioSystem.getClip();
             clip.open(audio);
 
-        }catch (Exception e){
+            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volume.setValue(-15.0f);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(-15.0f);
     }
 
 
     public void playLoop(){
-        if (clip != null &&  !clip.isRunning()){
-            clip.setFramePosition(0);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        if (clip == null) return;
 
+        if (clip.isRunning()) return;
 
-        }
+        clip.setFramePosition(0);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
+
     public void stop(){
         if (clip != null && clip.isRunning()){
             clip.stop();

@@ -20,7 +20,18 @@ public class TargetManager {
     private static final int TARGET_SIZE = 90;
     private static final int COLLISION_PADDING = 10;
 
+    private GameState currentState = GameState.MENU;
+
     public void spawnRandom(GameState state) {
+
+        if (currentState != GameState.PRACTICE &&
+                currentState != GameState.SURVIVAL) {
+            return;
+        }
+
+        if (state != GameState.PRACTICE && state != GameState.SURVIVAL) {
+            return;
+        }
 
         Iterator<Target> it = targets.iterator();
         while (it.hasNext()) {
@@ -66,10 +77,7 @@ public class TargetManager {
         }
     }
 
-    /**
-     * ✅ Verifica overlapping considerando el TAMAÑO COMPLETO del sprite
-     * (x, y) es el centro donde se va a posicionar el nuevo sprite
-     */
+
     private boolean isOverlappingWithSprite(double centerX, double centerY) {
         // Calcular bounds del nuevo sprite (considerando que será centrado)
         double newLeft = centerX - TARGET_SIZE / 2.0;
@@ -121,6 +129,10 @@ public class TargetManager {
             t.destroy();
         }
         targets.clear();
+    }
+
+    public void setState(GameState state) {
+        this.currentState = state;
     }
 
     public int getTargetCount() {
