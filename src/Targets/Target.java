@@ -21,6 +21,7 @@ public abstract class Target {
 
     public void spawn(double x, double y) {
 
+
         sprite = new Picture(0, 0, path);
 
         int targetSize = 90;

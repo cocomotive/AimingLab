@@ -11,32 +11,38 @@ import java.util.*;
 public class TargetManager {
 
     private List<Target> targets = new ArrayList<>();
+    private int maxTargets = 20;
     private Random rand = new Random();
 
     public void spawnRandom(GameState state) {
 
-        Target t;
+        if (targets.size() < maxTargets)
+        {
+            Target t;
 
-        if (state == GameState.PRACTICE) {
-            t = new FriendlyTarget();
-        } else {
-            int r = rand.nextInt(3);
-            if (r == 0) t = new EnemyTarget();
-            else if (r == 1) t = new FriendlyTarget();
-            else t = new DevilTarget();
+            if (state == GameState.PRACTICE) {
+                t = new FriendlyTarget();
+            } else {
+                int r = rand.nextInt(3);
+                if (r == 0) t = new EnemyTarget();
+                else if (r == 1) t = new FriendlyTarget();
+                else t = new DevilTarget();
+            }
+            double x, y;
+            int attempts = 0;
+
+            do {
+                x = rand.nextInt(700);
+                y = rand.nextInt(500);
+                attempts++;
+            } while (isOverlapping(x, y, 90) && attempts < 20);
+
+            t.spawn(x,y);
+
+            targets.add(t);
         }
-        double x, y;
-        int attempts = 0;
 
-        do {
-            x = rand.nextInt(700);
-            y = rand.nextInt(500);
-            attempts++;
-        } while (isOverlapping(x, y, 90) && attempts < 20);
 
-        t.spawn(x,y);
-
-        targets.add(t);
     }
 
     public boolean isOverlapping(double x, double y, double radius) {
