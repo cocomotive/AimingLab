@@ -63,7 +63,7 @@ public class TargetManager {
         int attempts = 0;
         int maxAttempts = 1000;
 
-        // ✅ Generar posición considerando el tamaño REAL del sprite
+
         do {
             x = COLLISION_PADDING + rand.nextDouble() * (SCREEN_WIDTH - TARGET_SIZE - 2 * COLLISION_PADDING);
             y = COLLISION_PADDING + rand.nextDouble() * (SCREEN_HEIGHT - TARGET_SIZE - 2 * COLLISION_PADDING);
@@ -114,7 +114,7 @@ public class TargetManager {
                 t.destroy();
                 it.remove();
 
-                // ✅ Spawn nuevo target inmediatamente después
+
                 if (game.getGameState() == Aiming.GameState.PRACTICE ||
                         game.getGameState() == Aiming.GameState.SURVIVAL) {
                     spawnTarget(game.getGameState());
