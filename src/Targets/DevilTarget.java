@@ -10,6 +10,6 @@ public class DevilTarget extends Target {
 
     @Override
     public void onHit(GameManager game) {
-        game.addScore(5);
+        game.addTime(-20);
     }
 }

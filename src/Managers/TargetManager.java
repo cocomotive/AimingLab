@@ -21,6 +21,16 @@ public class TargetManager {
     private static final int COLLISION_PADDING = 10;
 
     public void spawnRandom(GameState state) {
+
+        Iterator<Target> it = targets.iterator();
+        while (it.hasNext()) {
+            Target t = it.next();
+            if (t.isExpired()) {
+                t.destroy();
+                it.remove();
+            }
+        }
+
         if (targets.size() < maxTargets) {
             spawnTarget(state);
         }

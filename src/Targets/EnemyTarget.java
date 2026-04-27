@@ -10,6 +10,9 @@ public class EnemyTarget extends Target {
 
     @Override
     public void onHit(GameManager game) {
+
         game.addScore(1);
+        game.addTime(-3);
+
     }
 }

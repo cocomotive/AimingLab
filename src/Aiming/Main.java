@@ -13,7 +13,7 @@ public class Main {
         KeyboardInput keyboard = new KeyboardInput(game);
         keyboard.initKeys();
         Canvas canvas = Canvas.getInstance();
-        //canvas.toggleFullscreen();
+        canvas.toggleFullscreen();
 
     }
 }

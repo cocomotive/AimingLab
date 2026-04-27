@@ -12,6 +12,8 @@ public abstract class Target {
     protected double x, y;
     protected double radius;
     protected String path;
+    protected long spawnTime;
+    protected static final long LIFETIME = 2000;
     public Target(Picture sprite, double x, double y, double radius, String name) {}
 
 
@@ -38,7 +40,12 @@ public abstract class Target {
 
         radius = sprite.getWidth() * 0.5;
 
+        spawnTime = System.currentTimeMillis();
 
+    }
+
+    public boolean isExpired(){
+        return System.currentTimeMillis() - spawnTime > LIFETIME;
     }
 
     public void destroy() {

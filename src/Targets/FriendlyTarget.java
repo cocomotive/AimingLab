@@ -10,7 +10,6 @@ public class FriendlyTarget extends Target {
 
     @Override
     public void onHit(GameManager game) {
-        game.addTime(2);
-        game.addScore(6);
+        game.addScore(10);
     }
 }
