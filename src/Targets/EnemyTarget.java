@@ -1,5 +1,6 @@
 package Targets;
 
+import Aiming.GameState;
 import Managers.GameManager;
 
 public class EnemyTarget extends Target {
@@ -12,7 +13,10 @@ public class EnemyTarget extends Target {
     public void onHit(GameManager game) {
 
         game.addScore(1);
-        game.addTime(-3);
+
+        if (game.getGameState() == GameState.SURVIVAL) {
+            game.addTime(-3);
 
     }
+}
 }

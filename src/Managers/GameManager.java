@@ -23,7 +23,7 @@ public class GameManager {
     private int timeOffset = 0;
 
     public GameManager() {
-        uiRenderer = new UIRenderer(); // NUEVO
+        uiRenderer = new UIRenderer();
         menuMusic = new SoundManager("Resources/musica-aim-_4_.wav");
         showMenu();
 
@@ -67,32 +67,26 @@ public class GameManager {
 
         bg.setBackground("Resources/Background.jpg");
 
-        uiRenderer.show(); // NUEVO: Mostrar el UI
+        uiRenderer.show();
         uiRenderer.update(score, time, bestScore); // NUEVO
 
         new Thread(this::survivalLoop).start();
     }
 
     private void survivalLoop() {
-        long start = System.currentTimeMillis();
+
 
         while (state == GameState.SURVIVAL) {
-            long elapsed = (System.currentTimeMillis() - start) / 1000;
-            int spawnRate = Math.max(200, 1000 - (int)elapsed * 15);
 
             targetManager.spawnRandom(state);
-
-            time = 60 - (int)elapsed + timeOffset;
-
-            // NUEVO: Actualizar UI cada frame
+            time--;
             uiRenderer.update(score, time, bestScore);
 
             if (time <= 0) {
                 showGameOver();
                 break;
             }
-
-            sleep(spawnRate);
+            sleep(1000);
         }
     }
 
@@ -138,7 +132,13 @@ public class GameManager {
         score += v;
     }
 
-    public void addTime(int v) { time += v; }
+    public void addTime(int v) {
+        time += v;
+        if (time < 0) {
+            time = 0;
+        }
+
+    }
 
     private void clearUI() {
         targetManager.clear();

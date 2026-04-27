@@ -1,6 +1,7 @@
 package Targets;
 
 import Managers.GameManager;
+import Aiming.GameState;
 
 public class DevilTarget extends Target {
 
@@ -10,6 +11,8 @@ public class DevilTarget extends Target {
 
     @Override
     public void onHit(GameManager game) {
-        game.addTime(-20);
+        if (game.getGameState() == GameState.SURVIVAL) {
+            game.addTime(-20);
+        }
     }
 }
