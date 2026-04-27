@@ -7,6 +7,7 @@ import Targets.EnemyTarget;
 import Targets.FriendlyTarget;
 
 import java.util.*;
+import java.awt.Point;
 
 public class TargetManager {
 
@@ -16,8 +17,7 @@ public class TargetManager {
 
     public void spawnRandom(GameState state) {
 
-        if (targets.size() < maxTargets)
-        {
+        if (targets.size() < maxTargets) {
             Target t;
 
             if (state == GameState.PRACTICE) {
@@ -28,21 +28,32 @@ public class TargetManager {
                 else if (r == 1) t = new FriendlyTarget();
                 else t = new DevilTarget();
             }
-            double x, y;
-            int attempts = 0;
 
-            do {
-                x = rand.nextInt(700);
-                y = rand.nextInt(500);
-                attempts++;
-            } while (isOverlapping(x, y, 90) && attempts < 20);
+            // Obtener posiciones disponibles
+            List<Point> availableSpots = getAvailableSpawnPoints();
 
-            t.spawn(x,y);
-
-            targets.add(t);
+            // Si hay posiciones disponibles, spawnear en una al azar
+            if (!availableSpots.isEmpty()) {
+                Point p = availableSpots.get(rand.nextInt(availableSpots.size()));
+                t.spawn(p.x, p.y);
+                targets.add(t);
+            }
         }
+    }
 
+    private List<Point> getAvailableSpawnPoints() {
+        List<Point> available = new ArrayList<>();
+        int spacing = 120; // Separación mínima entre targets
+        int padding = 50;  // Margen desde los bordes
 
+        for (int x = padding; x < 700; x += spacing) {
+            for (int y = padding; y < 500; y += spacing) {
+                if (!isOverlapping(x, y, spacing)) {
+                    available.add(new Point(x, y));
+                }
+            }
+        }
+        return available;
     }
 
     public boolean isOverlapping(double x, double y, double radius) {
