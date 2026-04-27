@@ -1,11 +1,11 @@
 package Managers;
 
 import Aiming.*;
+import Managers.*;
 
 import java.util.*;
 import javax.swing.*;
 import java.util.*;
-
 
 public class GameManager {
 
@@ -16,6 +16,7 @@ public class GameManager {
     private UIRenderer uiRenderer; // NUEVO
     private List<Button> buttons = new ArrayList<>();
     private SoundManager menuMusic;
+    private CrossManager crossManager;
 
     private int score = 0;
     private int time = 60;
@@ -25,6 +26,8 @@ public class GameManager {
     public GameManager() {
         uiRenderer = new UIRenderer();
         menuMusic = new SoundManager("Resources/musica-aim-_4_.wav");
+        crossManager = new CrossManager();
+
         showMenu();
 
 
@@ -152,5 +155,11 @@ public class GameManager {
 
     private void sleep(int ms) {
         try { Thread.sleep(ms); } catch (Exception ignored) {}
+    }
+
+    public void updateMouse(double x, double y) {
+        if (crossManager != null) {
+            crossManager.updatePosition(x, y);
+        }
     }
 }

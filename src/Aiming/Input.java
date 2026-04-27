@@ -13,6 +13,7 @@ public class Input implements MouseHandler {
 
         Mouse mouse = new Mouse(this);
         mouse.addEventListener(MouseEventType.MOUSE_CLICKED);
+        mouse.addEventListener(MouseEventType.MOUSE_MOVED);
     }
 
     @Override
@@ -21,7 +22,9 @@ public class Input implements MouseHandler {
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {}
+    public void mouseMoved(MouseEvent e) {
+        game.updateMouse(e.getX(), e.getY());
+    }
 }
 
 
