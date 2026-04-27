@@ -24,8 +24,8 @@ public class UIRenderer {
         BufferedImage img = new BufferedImage(300, 50, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) img.getGraphics();
 
-        g2d.setColor(Color.BLACK);
-        g2d.fillRect(0, 0, 300, 50);
+        //g2d.setColor(Color.BLACK);
+        //g2d.fillRect(0, 0, 300, 50);
 
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD, 20));

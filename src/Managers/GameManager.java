@@ -31,11 +31,11 @@ public class GameManager {
         clearUI();
         state = GameState.MENU;
         menuMusic.playLoop();
-        bg.setBackground("Resources/Background.jpg");
+        bg.setBackground("Resources/menuBackground.png");
 
-        buttons.add(new Button(300,200,"Resources/PracticeButton.png", this::startPractice));
-        buttons.add(new Button(300,300,"Resources/SurvivalButton.png", this::startSurvival));
-        buttons.add(new Button(300,400,"Resources/ExitButton.png", () -> System.exit(0)));
+        buttons.add(new Button(250,650,"Resources/PracticeButton.png", this::startPractice));
+        buttons.add(new Button(650,650,"Resources/SurvivalButton.png", this::startSurvival));
+        buttons.add(new Button(1050,650,"Resources/ExitButton.png", () -> System.exit(0)));
     }
 
     // ===== PRACTICE =====
@@ -101,10 +101,11 @@ public class GameManager {
             ScoreManager.save(score);
         }
 
-        bg.setBackground("Resources/Background.jpg");
+        bg.setBackground("Resources/GameOverBackground.png");
 
-        buttons.add(new Button(300,300,"images/retry_btn.png", this::startSurvival));
-        buttons.add(new Button(300,400,"images/menu_btn.png", this::showMenu));
+        buttons.add(new Button(250,650,"Resources/RestartButton.png", this::startSurvival));
+        buttons.add(new Button(650,650,"Resources/MenuButton.png", this::showMenu));
+        buttons.add(new Button(1050,650,"Resources/ExitButton.png", () -> System.exit(0)));
     }
 
     // ===== INPUT =====
