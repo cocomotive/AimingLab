@@ -25,12 +25,37 @@ public class TargetManager {
             else if (r == 1) t = new FriendlyTarget();
             else t = new DevilTarget();
         }
+        double x, y;
+        int attempts = 0;
 
-        double x = rand.nextInt(700);
-        double y = rand.nextInt(500);
+        do {
+            x = rand.nextInt(700);
+            y = rand.nextInt(500);
+            attempts++;
+        } while (isOverlapping(x, y, 90) && attempts < 20);
 
-        t.spawn(x, y);
+        t.spawn(x,y);
+
         targets.add(t);
+    }
+
+    public boolean isOverlapping(double x, double y, double radius) {
+
+        for (Target t : targets) {
+            double tx = t.getX() + t.getWidth() / 2.0;
+            double ty = t.getY() + t.getHeight() / 2.0;
+
+            double dx = x - tx;
+            double dy = y - ty;
+
+            double distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < radius * 2) {
+                return true;
+            }
+
+        }
+        return false;
     }
 
     public void handleClick(double x, double y, GameManager game) {

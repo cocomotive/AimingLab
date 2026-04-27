@@ -5,11 +5,12 @@ import Managers.GameManager;
 public class FriendlyTarget extends Target {
 
     public FriendlyTarget() {
-        super("AimingLab/Resources/friendlyTarget.png");
+        super("Resources/friendlyTarget.png");
     }
 
     @Override
     public void onHit(GameManager game) {
         game.addTime(2);
+        game.addScore(6);
     }
 }

@@ -1,12 +1,14 @@
 package Targets;
 
 import Managers.GameManager;
+import Managers.TargetManager;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
 public abstract class Target {
 
     protected Picture sprite;
+    protected TargetManager targetManager;
     protected double x, y;
     protected double radius;
     protected String path;
@@ -34,6 +36,8 @@ public abstract class Target {
         sprite.draw();
 
         radius = sprite.getWidth() * 0.5;
+
+
     }
 
     public void destroy() {
@@ -49,6 +53,22 @@ public abstract class Target {
         double dy = my - cy;
 
         return dx * dx + dy * dy <= radius * radius;
+    }
+
+    public double getX() {
+        return sprite.getX();
+    }
+
+    public double getY() {
+        return sprite.getY();
+    }
+
+    public double getWidth() {
+        return sprite.getWidth();
+    }
+
+    public double getHeight() {
+        return sprite.getHeight();
     }
 
     public abstract void onHit(GameManager game);

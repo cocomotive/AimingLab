@@ -15,12 +15,12 @@ public class GameManager {
     private SoundManager menuMusic;
 
     private int score = 0;
-    private int time = 60;
+    private int time = 10;
     private int bestScore = ScoreManager.load();
 
     public GameManager() {
         uiRenderer = new UIRenderer(); // NUEVO
-        menuMusic = new SoundManager("AimingLab/Resources/musica-aim-_4_.wav");
+        menuMusic = new SoundManager("Resources/musica-aim-_4_.wav");
         showMenu();
 
 
@@ -31,18 +31,18 @@ public class GameManager {
         clearUI();
         state = GameState.MENU;
         menuMusic.playLoop();
-        bg.setBackground("AimingLab/Resources/Background.jpg");
+        bg.setBackground("Resources/Background.jpg");
 
-        buttons.add(new Button(300,200,"AimingLab/Resources/PracticeButton.png", this::startPractice));
-        buttons.add(new Button(300,300,"AimingLab/Resources/SurvivalButton.png", this::startSurvival));
-        buttons.add(new Button(300,400,"AimingLab/Resources/ExitButton.png", () -> System.exit(0)));
+        buttons.add(new Button(300,200,"Resources/PracticeButton.png", this::startPractice));
+        buttons.add(new Button(300,300,"Resources/SurvivalButton.png", this::startSurvival));
+        buttons.add(new Button(300,400,"Resources/ExitButton.png", () -> System.exit(0)));
     }
 
     // ===== PRACTICE =====
     public void startPractice() {
         clearUI();
         state = GameState.PRACTICE;
-        bg.setBackground("AimingLab/Resources/Background.jpg");
+        bg.setBackground("Resources/Background.jpg");
 
         new Thread(() -> {
             while (state == GameState.PRACTICE) {
@@ -60,7 +60,7 @@ public class GameManager {
         score = 0;
         time = 60;
 
-        bg.setBackground("AimingLab/Resources/Background.jpg");
+        bg.setBackground("Resources/Background.jpg");
 
         uiRenderer.show(); // NUEVO: Mostrar el UI
         uiRenderer.update(score, time, bestScore); // NUEVO
@@ -101,7 +101,7 @@ public class GameManager {
             ScoreManager.save(score);
         }
 
-        bg.setBackground("AimingLab/Resources/Background.jpg");
+        bg.setBackground("Resources/Background.jpg");
 
         buttons.add(new Button(300,300,"images/retry_btn.png", this::startSurvival));
         buttons.add(new Button(300,400,"images/menu_btn.png", this::showMenu));
